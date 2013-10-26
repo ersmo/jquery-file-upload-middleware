@@ -1,4 +1,5 @@
 var _ = require('lodash'),
+    express = require('express'),
     EventEmitter = require('events').EventEmitter;
 
 var JqueryFileUploadMiddleware = function () {
