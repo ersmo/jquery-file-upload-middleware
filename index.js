@@ -54,4 +54,25 @@ JqueryFileUploadMiddleware.prototype.fileManager = function (options) {
     return require('./lib/filemanager')(this, this.prepareOptions(_.extend(this.options, options)));
 };
 
-module.exports = new JqueryFileUploadMiddleware();
+var jqueryFileUploadMiddleware = new JqueryFileUploadMiddleware();
+
+
+jqueryFileUploadMiddleware.nope = function(req, res, next) {
+  next();
+};
+
+jqueryFileUploadMiddleware.init = function(route, app, options) {
+  if (options == null) options = {};
+  if (!(app || route)) return this.nope;
+  app.stack.splice(app.stack.map(function(_) {
+    return _.handle.name;
+  }).indexOf('bodyParser'), 0, {
+    route: route,
+    handle: express.bodyParser({
+      defer: true
+    })
+  });
+  return app.use(route, this.fileHandler(options));
+};
+
+module.exports = jqueryFileUploadMiddleware;
