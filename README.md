@@ -1,6 +1,27 @@
 jquery-file-upload-middleware
 =============================
 
+### especially for express
+
+````
+    app = express()
+
+    upload = require('jquery-file-upload-middleware')
+
+    upload.configure({
+        uploadDir: __basename + '/public/files',
+        uploadUrl: '/uploads',
+        imageVersions: {
+            thumbnail: {
+                width: 80,
+                height: 80
+            }
+        }
+    });
+
+    upload.init '/upload', app
+````
+
 ### Personal Patch Repository
 
 Please comeback [Aleksandr Guidrevitch](http://aguidrevitch.blogspot.com/) lol
